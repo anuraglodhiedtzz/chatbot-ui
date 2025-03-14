@@ -7,23 +7,28 @@ document.addEventListener("DOMContentLoaded", function () {
         let userInput = userInputField.value.trim();
         if (userInput === "") return;
 
-        chat.innerHTML += `<div><strong>You:</strong> ${userInput}</div>`;
+        // Append user message to chat
+        chat.innerHTML += `<div class="user-message"><strong>You:</strong> ${userInput}</div>`;
         userInputField.value = "";
 
+        // Auto-scroll
+        chat.scrollTop = chat.scrollHeight;
+
         try {
-            let response = await fetch("https://chatbot-backend-n7vl.onrender.com", {
+            let response = await fetch("https://chatbot-backend.onrender.com/chatbot", {  // Fixed the API URL
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ message: userInput }),
             });
 
             let data = await response.json();
-            chat.innerHTML += `<div><strong>Bot:</strong> ${data.reply}</div>`;
+            chat.innerHTML += `<div class="bot-message"><strong>Bot:</strong> ${data.reply}</div>`;
         } catch (error) {
-            chat.innerHTML += `<div><strong>Bot:</strong> Error! Try again.</div>`;
+            chat.innerHTML += `<div class="bot-message error"><strong>Bot:</strong> Error! Try again.</div>`;
         }
 
-        chat.scrollTop = chat.scrollHeight; // Auto-scroll to the latest message
+        // Auto-scroll after receiving response
+        chat.scrollTop = chat.scrollHeight;
     }
 
     sendButton.addEventListener("click", sendMessage);
