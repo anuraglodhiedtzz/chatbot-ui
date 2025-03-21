@@ -11,7 +11,7 @@ async function sendMessage() {
     chat.scrollTop = chat.scrollHeight;
 
     try {
-        let response = await fetch("https://chatbot-backend-1-9ggm.onrender.com/api/chatbot/chat", {
+        let response = await fetch("https://chatbot-backend-1-9ggm.onrender.com/api/chatbot", {  // ✅ CORRECT ENDPOINT
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ message: userInput }),
